@@ -1,0 +1,139 @@
+/* ═══════════════════════════════════════════════════════════
+   DESIGN TOKENS v2 — Gen Z · Google-Colab-inspired palette
+   Soft, modern, accessible. Light + Dark.
+   ═══════════════════════════════════════════════════════════ */
+
+:root,
+[data-theme="light"] {
+  /* ── Backgrounds ── */
+  --bg-page:        #f0f2fc;
+  --bg-surface:     #ffffff;
+  --bg-raised:      #f5f6fb;
+  --bg-glass:       rgba(255,255,255,0.72);
+  --bg-glass-dark:  rgba(255,255,255,0.12);
+  --bg-overlay:     rgba(20, 22, 50, 0.45);
+
+  /* ── Text ── */
+  --text-primary:   #1a1c2e;
+  --text-secondary: #414468;
+  --text-muted:     #7b82aa;
+  --text-inverse:   #ffffff;
+
+  /* ── Borders ── */
+  --border:         #dde1f5;
+  --border-focus:   #7c6af7;
+  --border-glass:   rgba(255,255,255,0.6);
+
+  /* ── Accent palette (Colab-inspired + Gen Z vibes) ── */
+  --accent-primary:    #6c63ff;   /* electric violet */
+  --accent-primary-h:  #574fd6;
+  --accent-secondary:  #f7797d;   /* coral rose */
+  --accent-tertiary:   #43c6ac;   /* aqua mint */
+  --accent-success:    #30d158;
+  --accent-warning:    #ff9f0a;
+  --accent-danger:     #ff453a;
+  --accent-info:       #32ade6;
+  --accent-xp:         #ffd60a;   /* XP gold */
+
+  /* ── Tints ── */
+  --tint-primary:    rgba(108, 99, 255, 0.10);
+  --tint-secondary:  rgba(247, 121, 125, 0.10);
+  --tint-tertiary:   rgba(67, 198, 172, 0.10);
+  --tint-success:    rgba(48, 209, 88,  0.10);
+  --tint-warning:    rgba(255, 159, 10, 0.12);
+  --tint-danger:     rgba(255, 69, 58,  0.10);
+  --tint-xp:         rgba(255, 214, 10, 0.12);
+
+  /* ── Gradient presets ── */
+  --grad-primary:    linear-gradient(135deg, #6c63ff 0%, #a78bfa 100%);
+  --grad-secondary:  linear-gradient(135deg, #f7797d 0%, #fbd3e9 100%);
+  --grad-aurora:     linear-gradient(135deg, #43c6ac 0%, #6c63ff 50%, #f7797d 100%);
+  --grad-xp:         linear-gradient(90deg, #ffd60a, #ff9f0a);
+  --grad-success:    linear-gradient(90deg, #30d158, #43c6ac);
+
+  /* ── Topbar ── */
+  --topbar-bg:       rgba(255,255,255,0.88);
+  --topbar-border:   rgba(220,222,245,0.9);
+  --topbar-blur:     blur(18px);
+  --topbar-shadow:   0 2px 16px rgba(108,99,255,.08);
+
+  /* ── Cards ── */
+  --card-bg:         rgba(255,255,255,0.82);
+  --card-border:     rgba(220,222,245,0.8);
+  --card-shadow:     0 2px 8px rgba(108,99,255,.06), 0 8px 24px rgba(20,22,50,.04);
+  --card-shadow-h:   0 8px 24px rgba(108,99,255,.14), 0 16px 40px rgba(20,22,50,.08);
+  --card-blur:       blur(12px);
+
+  /* ── Progress track ── */
+  --progress-track:  #e4e7f8;
+
+  /* ── Shape tokens ── */
+  --radius-xs:  4px;
+  --radius-sm:  8px;
+  --radius-md:  14px;
+  --radius-lg:  20px;
+  --radius-xl:  28px;
+  --radius-full: 9999px;
+
+  /* ── Timing ── */
+  --ease-out:    cubic-bezier(.22,1,.36,1);
+  --ease-spring: cubic-bezier(.34,1.56,.64,1);
+  --t-fast:  150ms;
+  --t-base:  220ms;
+  --t-slow:  400ms;
+}
+
+[data-theme="dark"] {
+  --bg-page:        #0d0e1a;
+  --bg-surface:     #13152b;
+  --bg-raised:      #1c1f38;
+  --bg-glass:       rgba(19,21,43,0.78);
+  --bg-glass-dark:  rgba(255,255,255,0.06);
+  --bg-overlay:     rgba(0,0,0,0.65);
+
+  --text-primary:   #eaebff;
+  --text-secondary: #9ba3d4;
+  --text-muted:     #4e567a;
+  --text-inverse:   #ffffff;
+
+  --border:         #252849;
+  --border-focus:   #a78bfa;
+  --border-glass:   rgba(255,255,255,0.08);
+
+  --accent-primary:    #a78bfa;
+  --accent-primary-h:  #9070f0;
+  --accent-secondary:  #ff6b7a;
+  --accent-tertiary:   #2dd4bf;
+  --accent-success:    #30d158;
+  --accent-warning:    #ffa41b;
+  --accent-danger:     #ff6961;
+  --accent-info:       #5ac8fa;
+  --accent-xp:         #ffd60a;
+
+  --tint-primary:    rgba(167,139,250,0.15);
+  --tint-secondary:  rgba(255,107,122,0.12);
+  --tint-tertiary:   rgba(45,212,191,0.12);
+  --tint-success:    rgba(48,209,88, 0.12);
+  --tint-warning:    rgba(255,164,27,0.12);
+  --tint-danger:     rgba(255,105,97,0.12);
+  --tint-xp:         rgba(255,214,10,0.12);
+
+  --grad-primary:    linear-gradient(135deg, #a78bfa 0%, #7c63f5 100%);
+  --grad-secondary:  linear-gradient(135deg, #ff6b7a 0%, #c75ffc 100%);
+  --grad-aurora:     linear-gradient(135deg, #2dd4bf 0%, #a78bfa 50%, #ff6b7a 100%);
+  --grad-xp:         linear-gradient(90deg, #ffd60a, #ffa41b);
+  --grad-success:    linear-gradient(90deg, #30d158, #2dd4bf);
+
+  --topbar-bg:       rgba(13,14,26,0.88);
+  --topbar-border:   rgba(37,40,73,0.9);
+  --topbar-blur:     blur(18px);
+  --topbar-shadow:   0 2px 16px rgba(0,0,0,.4);
+
+  --card-bg:         rgba(19,21,43,0.80);
+  --card-border:     rgba(37,40,73,0.8);
+  --card-shadow:     0 2px 8px rgba(0,0,0,.2), 0 8px 24px rgba(0,0,0,.15);
+  --card-shadow-h:   0 8px 24px rgba(167,139,250,.15), 0 16px 40px rgba(0,0,0,.3);
+  --card-blur:       blur(12px);
+
+  --progress-track:  #1e2240;
+}

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crafting Tracker &amp; Project Milestone</title>
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+
+  <!-- ═══════════ AESTHETIC BACKGROUND ═══════════ -->
+  <div class="bg-scene" id="bgScene" aria-hidden="true">
+    <canvas id="starCanvas"></canvas>
+    <div class="mountain-wrap" id="mountainWrap">
+      <svg class="mountain-svg" viewBox="0 0 1440 320" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop id="skyTop" offset="0%" stop-color="#0d0e1a"/>
+            <stop id="skyBot" offset="100%" stop-color="#1c1f38"/>
+          </linearGradient>
+        </defs>
+        <polygon id="mtnBack"  points="0,320 200,120 400,200 600,80 800,180 1000,60 1200,160 1440,100 1440,320" fill="rgba(20,18,50,0.7)"/>
+        <polygon id="mtnFront" points="0,320 180,200 360,250 540,150 720,230 900,130 1080,210 1260,160 1440,200 1440,320" fill="rgba(12,10,30,0.85)"/>
+      </svg>
+    </div>
+    <div class="aurora aurora--1" aria-hidden="true"></div>
+    <div class="aurora aurora--2" aria-hidden="true"></div>
+    <div class="aurora aurora--3" aria-hidden="true"></div>
+  </div>
+
+  <!-- ═══════════ AUTH SCREEN ═══════════ -->
+  <div class="auth-screen" id="authScreen">
+    <div class="auth-card glass-card">
+      <div class="auth-logo">
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none"><rect width="52" height="52" rx="16" style="fill:url(#agrad)"/><defs><linearGradient id="agrad" x1="0" y1="0" x2="52" y2="52"><stop stop-color="#6c63ff"/><stop offset="1" stop-color="#a78bfa"/></linearGradient></defs><path d="M14 36 L22 16 L30 28 L36 20" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="36" cy="20" r="4" fill="#ffd60a"/></svg>
+      </div>
+      <h1 class="auth-title">Crafting Tracker</h1>
+      <p class="auth-subtitle">Track projects · Earn badges · Share wins ✨</p>
+      <button class="btn-google" id="googleSignIn">
+        <svg viewBox="0 0 24 24" width="20" height="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        Continue with Google
+      </button>
+      <div class="auth-divider"><span>or</span></div>
+      <form class="auth-guest-form" id="guestForm">
+        <input class="form-input" type="text" id="guestName" placeholder="Enter your name to continue as guest" maxlength="40" autocomplete="off" />
+        <button type="submit" class="btn btn--primary btn--full">Get Started →</button>
+      </form>
+      <p class="auth-note">No account required · All data stored locally</p>
+    </div>
+  </div>
+
+  <!-- ═══════════ APP SHELL ═══════════ -->
+  <div class="app-shell hidden" id="appShell">
+
+    <!-- TOP NAV -->
+    <header class="topbar" role="banner">
+      <div class="topbar__brand">
+        <svg class="topbar__logo" viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="10" fill="url(#tgrad)"/><defs><linearGradient id="tgrad" x1="0" y1="0" x2="36" y2="36"><stop stop-color="#6c63ff"/><stop offset="1" stop-color="#a78bfa"/></linearGradient></defs><path d="M9 27 L16 11 L23 21 L27 16" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="27" cy="16" r="3" fill="#ffd60a"/></svg>
+        <span class="topbar__title">Crafting Tracker</span>
+      </div>
+      <nav class="topbar__nav" role="navigation" aria-label="Main navigation">
+        <button class="nav-btn active" data-view="dashboard">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 11l8-8 8 8v7a1 1 0 01-1 1H3a1 1 0 01-1-1v-7z"/></svg><span>Home</span>
+        </button>
+        <button class="nav-btn" data-view="projects">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd"/></svg><span>Projects</span>
+        </button>
+        <button class="nav-btn" data-view="badges">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg><span>Badges</span>
+        </button>
+      </nav>
+      <div class="topbar__actions">
+        <div class="xp-chip" id="xpChip" title="Your XP &amp; Level">
+          <span class="xp-chip__level" id="xpLevel">Lv 1</span>
+          <div class="xp-chip__bar"><div class="xp-chip__fill" id="xpFill"></div></div>
+          <span class="xp-chip__pts" id="xpPts">0 XP</span>
+        </div>
+        <button class="icon-btn" id="notifBtn" aria-label="Notifications">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"/></svg>
+          <span class="notif-badge hidden" id="notifCount">0</span>
+        </button>
+        <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+          <svg class="sun-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/></svg>
+          <svg class="moon-icon hidden" viewBox="0 0 20 20" fill="currentColor"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+        </button>
+        <button class="avatar-btn" id="userMenuBtn" aria-label="User menu"><span id="userAvatarText">?</span></button>
+        <button class="btn btn--primary btn--sm" id="addProjectBtn">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd"/></svg>New
+        </button>
+      </div>
+    </header>
+
+    <!-- NOTIFICATION DRAWER -->
+    <aside class="notif-drawer hidden" id="notifDrawer" role="complementary">
+      <div class="notif-drawer__header">
+        <h3>Reminders</h3>
+        <button class="icon-btn" id="clearNotifs">Clear all</button>
+      </div>
+      <ul class="notif-list" id="notifList" role="list"></ul>
+      <p class="notif-empty hidden" id="notifEmpty">All caught up! 🎉</p>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content" id="mainContent">
+
+      <!-- ════ DASHBOARD VIEW ════ -->
+      <section class="view active" id="view-dashboard">
+
+        <!-- Greeting + Clock -->
+        <div class="dashboard-top">
+          <div class="greeting-block">
+            <p class="greeting-eyebrow">Good vibes only ✨</p>
+            <h1 class="greeting-title" id="greetingTitle">Welcome!</h1>
+            <p class="greeting-sub" id="greetingSub">Here's what's happening with your projects today.</p>
+          </div>
+          <div class="widget glass-card widget--clock" id="clockWidget">
+            <div class="clock-time" id="clockTime">00:00:00</div>
+            <div class="clock-date" id="clockDate">Monday, Jan 1</div>
+          </div>
+        </div>
+
+        <!-- Stat cards — each is clickable to open filtered project list -->
+        <div class="stats-grid" id="statsGrid">
+          <button class="stat-card glass-card stat-btn" data-filter="all" aria-label="View all projects">
+            <span class="stat-card__value" id="stat-total">0</span>
+            <span class="stat-card__label">Total Projects</span>
+            <span class="stat-card__hint">tap to view</span>
+          </button>
+          <button class="stat-card glass-card stat-card--active stat-btn" data-filter="active" aria-label="View in-progress projects">
+            <span class="stat-card__value" id="stat-active">0</span>
+            <span class="stat-card__label">In Progress</span>
+            <span class="stat-card__hint">tap to view</span>
+          </button>
+          <button class="stat-card glass-card stat-card--done stat-btn" data-filter="completed" aria-label="View completed projects">
+            <span class="stat-card__value" id="stat-done">0</span>
+            <span class="stat-card__label">Completed</span>
+            <span class="stat-card__hint">tap to view</span>
+          </button>
+          <button class="stat-card glass-card stat-card--overdue stat-btn" data-filter="overdue" aria-label="View overdue projects">
+            <span class="stat-card__value" id="stat-overdue">0</span>
+            <span class="stat-card__label">Overdue</span>
+            <span class="stat-card__hint">tap to view</span>
+          </button>
+        </div>
+
+        <!-- Recent projects + Calendar -->
+        <div class="dashboard-middle">
+          <div class="dashboard-col dashboard-col--wide">
+            <div class="section-title-row">
+              <h2 class="section-title">Recent Projects</h2>
+              <div class="dash-search-wrap">
+                <svg class="dash-search-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/>
+                </svg>
+                <input
+                  class="dash-search-input"
+                  type="search"
+                  id="dashSearch"
+                  placeholder="Search recent projects…"
+                  aria-label="Search recent projects"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+            <div class="projects-grid" id="recentProjects"></div>
+            <div class="empty-state hidden" id="dashEmpty">
+              <div class="empty-icon">🌱</div>
+              <p>No projects yet. Plant your first seed!</p>
+              <button class="btn btn--primary" id="dashAddBtn">Start a Project</button>
+            </div>
+            <div class="empty-state hidden" id="dashSearchEmpty">
+              <div class="empty-icon">🔍</div>
+              <p>No recent projects match your search.</p>
+            </div>
+          </div>
+          <div class="dashboard-col dashboard-col--narrow">
+            <h2 class="section-title">Calendar</h2>
+            <div class="widget glass-card widget--calendar" id="calendarWidget"></div>
+          </div>
+        </div>
+
+        <!-- Weather + News + Music row -->
+        <div class="dashboard-bottom">
+          <div class="widget glass-card widget--weather" id="weatherWidget">
+            <div class="widget__header">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path d="M5.5 16a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 16h-8z"/></svg>
+              <span>Weather</span>
+              <span class="widget__badge">Live</span>
+            </div>
+            <div class="weather-content" id="weatherContent">
+              <div class="weather-main">
+                <span class="weather-icon" id="weatherIcon">🌤️</span>
+                <div>
+                  <div class="weather-temp" id="weatherTemp">--°C</div>
+                  <div class="weather-desc" id="weatherDesc">Loading…</div>
+                </div>
+              </div>
+              <div class="weather-meta"><span id="weatherCity">Detecting location…</span></div>
+            </div>
+          </div>
+
+          <div class="widget glass-card widget--news" id="newsWidget">
+            <div class="widget__header">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"/><path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"/></svg>
+              <span>Craft &amp; DIY News</span>
+              <span class="widget__badge">API</span>
+            </div>
+            <ul class="news-list" id="newsList" role="list"></ul>
+          </div>
+
+          <!-- Music Player widget — embedded YouTube iframe (nocookie) -->
+          <div class="widget glass-card widget--music" id="musicWidget">
+            <div class="widget__header">
+              <svg viewBox="0 0 20 20" fill="currentColor"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+              <span>Music</span>
+              <span class="widget__badge" id="musicBadge">⏸ Ready</span>
+            </div>
+            <!-- Search bar — paste a YouTube URL or enter a search keyword -->
+            <form class="music-search-form" id="musicSearchForm" autocomplete="off">
+              <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/></svg>
+              <input
+                class="music-search-input"
+                type="search"
+                id="musicSearchInput"
+                placeholder="Paste YouTube URL or search…"
+                aria-label="Search or paste YouTube URL"
+              />
+              <button type="submit" class="music-search-btn" aria-label="Load track">▶</button>
+            </form>
+            <!-- Embedded YouTube iframe — uses youtube-nocookie.com to avoid Error 153 -->
+            <div class="music-iframe-wrap" id="musicIframeWrap">
+              <!-- Placeholder shown before first play -->
+              <div class="music-placeholder" id="musicPlaceholder">
+                <div class="music-placeholder__icon">🎵</div>
+                <p class="music-placeholder__text">Search above or press play to start</p>
+              </div>
+              <iframe
+                id="musicIframe"
+                src=""
+                allow="autoplay; encrypted-media"
+                allowfullscreen
+                frameborder="0"
+                title="Music player"
+                style="display:none"
+              ></iframe>
+            </div>
+            <!-- Track info + controls row -->
+            <div class="music-body" id="musicBody">
+              <div class="music-info">
+                <div class="music-title" id="musicTitle">Lo-fi Chill Beats</div>
+                <div class="music-artist" id="musicArtist">ChilledCow</div>
+              </div>
+              <div class="music-controls">
+                <button class="music-btn" id="musicPrev" aria-label="Previous track">
+                  <svg viewBox="0 0 20 20" fill="currentColor"><path d="M8.445 14.832A1 1 0 0010 14v-2.798l5.445 3.63A1 1 0 0017 14V6a1 1 0 00-1.555-.832L10 8.798V6a1 1 0 00-1.555-.832l-6 4a1 1 0 000 1.664l6 4z"/></svg>
+                </button>
+                <button class="music-btn music-btn--play" id="musicPlay" aria-label="Play / load track">
+                  <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/></svg>
+                </button>
+                <button class="music-btn" id="musicNext" aria-label="Next track">
+                  <svg viewBox="0 0 20 20" fill="currentColor"><path d="M4.555 5.168A1 1 0 003 6v8a1 1 0 001.555.832L10 11.202V14a1 1 0 001.555.832l6-4a1 1 0 000-1.664l-6-4A1 1 0 0010 6v2.798L4.555 5.168z"/></svg>
+                </button>
+                <!-- Volume slider -->
+                <input class="music-volume" id="musicVolume" type="range" min="0" max="100" value="70" aria-label="Volume" title="Volume" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ════ PROJECTS VIEW ════ -->
+      <section class="view" id="view-projects">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">All Projects</h1>
+            <p class="view-subtitle">Click any card to view or edit it instantly.</p>
+          </div>
+          <div class="view-header__actions">
+            <input class="search-input" type="search" id="projectSearch" placeholder="Search…" aria-label="Search" />
+            <select class="select-input" id="projectFilter" aria-label="Filter">
+              <option value="all">All</option>
+              <option value="active">In Progress</option>
+              <option value="completed">Completed</option>
+              <option value="overdue">Overdue</option>
+            </select>
+          </div>
+        </div>
+        <div class="projects-grid" id="allProjects"></div>
+        <div class="empty-state hidden" id="projectsEmpty">
+          <div class="empty-icon">🔍</div><p>No projects match your filter.</p>
+        </div>
+      </section>
+
+      <!-- ════ BADGES VIEW ════ -->
+      <section class="view" id="view-badges">
+        <div class="view-header">
+          <div>
+            <h1 class="view-title">Achievements</h1>
+            <p class="view-subtitle">Collect badges · Flex your wins.</p>
+          </div>
+          <div class="level-display glass-card" id="levelDisplay">
+            <div class="level-display__ring">
+              <svg viewBox="0 0 80 80" class="level-ring-svg">
+                <circle cx="40" cy="40" r="34" fill="none" stroke="var(--progress-track)" stroke-width="7"/>
+                <circle cx="40" cy="40" r="34" fill="none" stroke="url(#xpRingGrad)" stroke-width="7"
+                  stroke-linecap="round" stroke-dasharray="213.6" stroke-dashoffset="213.6"
+                  id="xpRingArc" transform="rotate(-90 40 40)"/>
+                <defs><linearGradient id="xpRingGrad" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#ffd60a"/><stop offset="1" stop-color="#ff9f0a"/></linearGradient></defs>
+                <text x="40" y="37" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text-primary)" id="levelRingNum">1</text>
+                <text x="40" y="52" text-anchor="middle" font-size="9" fill="var(--text-muted)">Level</text>
+              </svg>
+            </div>
+            <div>
+              <div class="level-display__name" id="levelName">Apprentice</div>
+              <div class="level-display__xp" id="levelXP">0 / 100 XP</div>
+            </div>
+          </div>
+        </div>
+        <div class="badges-gallery" id="badgesGallery"></div>
+        <div class="empty-state hidden" id="badgesEmpty">
+          <div class="empty-icon">🏆</div><p>Complete a project to earn your first badge!</p>
+        </div>
+      </section>
+
+    </main>
+  </div><!-- /app-shell -->
+
+  <!-- ═══════════ STAT PROJECTS MODAL ═══════════ -->
+  <div class="modal-overlay hidden" id="statModal" role="dialog" aria-modal="true" aria-labelledby="statModalTitle">
+    <div class="modal glass-card modal--wide">
+      <div class="modal__header">
+        <h2 class="modal__title" id="statModalTitle">Projects</h2>
+        <button class="icon-btn" id="closeStatModal" aria-label="Close">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+      <div class="modal__body" style="padding:12px 22px 22px">
+        <div class="projects-grid" id="statModalProjects"></div>
+        <div class="empty-state hidden" id="statModalEmpty">
+          <div class="empty-icon">🎉</div><p>No projects in this category yet.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ PROJECT EDIT MODAL ═══════════ -->
+  <div class="modal-overlay hidden" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal glass-card">
+      <div class="modal__header">
+        <h2 class="modal__title" id="modalTitle">New Project</h2>
+        <button class="icon-btn" id="closeModal" aria-label="Close">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+      <form class="modal__body" id="projectForm" novalidate>
+        <input type="hidden" id="projectId" />
+        <div class="form-group">
+          <label class="form-label" for="projName">Project Name *</label>
+          <input class="form-input" type="text" id="projName" placeholder="e.g. Autumn Quilt" required maxlength="80" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="projDesc">Description</label>
+          <textarea class="form-input form-textarea" id="projDesc" placeholder="What are you crafting?" rows="2" maxlength="300"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="projCategory">Category</label>
+            <select class="form-input" id="projCategory">
+              <option value="sewing">🧵 Sewing</option>
+              <option value="knitting">🧶 Knitting</option>
+              <option value="woodwork">🪵 Woodwork</option>
+              <option value="painting">🎨 Painting</option>
+              <option value="jewelry">💎 Jewelry</option>
+              <option value="pottery">🏺 Pottery</option>
+              <option value="other">✨ Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="projDeadline">Deadline</label>
+            <input class="form-input" type="date" id="projDeadline" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="projGoal">Goal / Milestone</label>
+          <input class="form-input" type="text" id="projGoal" placeholder="e.g. Finish all 12 quilt squares" maxlength="120" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="projProgress">Progress: <strong id="progressLabel">0%</strong></label>
+          <input class="form-range" type="range" id="projProgress" min="0" max="100" step="5" value="0" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="projReminder">Reminder</label>
+          <select class="form-input" id="projReminder">
+            <option value="none">No reminders</option>
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="deadline">3 days before deadline</option>
+          </select>
+        </div>
+        <div class="modal__footer">
+          <button type="button" class="btn btn--ghost" id="cancelModal">Cancel</button>
+          <button type="submit" class="btn btn--primary">Save Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══════════ CALENDAR DAY POPUP ═══════════ -->
+  <div class="cal-popover hidden" id="calPopover" role="dialog" aria-modal="true" aria-labelledby="calPopoverTitle">
+    <div class="cal-popover__header">
+      <span class="cal-popover__title" id="calPopoverTitle">Jan 1</span>
+      <button class="icon-btn cal-popover__close" id="closeCalPopover" aria-label="Close">✕</button>
+    </div>
+    <ul class="cal-popover__list" id="calPopoverList" role="list"></ul>
+    <p class="cal-popover__empty hidden" id="calPopoverEmpty">No deadlines on this day.</p>
+    <button class="btn btn--primary btn--sm btn--full" id="calPopoverAddBtn" style="margin-top:10px">+ Add Project for this date</button>
+  </div>
+
+  <!-- ═══════════ SHARE MODAL ═══════════ -->
+  <div class="modal-overlay hidden" id="shareModal" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
+    <div class="modal modal--narrow glass-card">
+      <div class="modal__header">
+        <h2 class="modal__title" id="shareModalTitle">Share Achievement</h2>
+        <button class="icon-btn" id="closeShareModal" aria-label="Close">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+        </button>
+      </div>
+      <div class="modal__body">
+        <div id="shareBadgePreview" class="share-badge-preview"></div>
+        <p class="share-caption" id="shareCaption"></p>
+        <div class="share-buttons">
+          <button class="share-btn share-btn--twitter"   id="shareTwitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>Share on X</button>
+          <button class="share-btn share-btn--whatsapp"  id="shareWhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WhatsApp</button>
+          <button class="share-btn share-btn--instagram" id="shareInstagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>Instagram Story</button>
+          <button class="share-btn share-btn--facebook" id="shareFacebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>Facebook</button>
+          <button class="share-btn share-btn--copy"     id="shareCopy"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"/><path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z"/></svg>Copy Link</button>
+          <button class="share-btn share-btn--download" id="shareDownload"><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>Download SVG</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════ LEVEL UP OVERLAY ═══════════ -->
+  <div class="levelup-overlay hidden" id="levelupOverlay" aria-live="polite">
+    <div class="levelup-card glass-card">
+      <div class="levelup-stars">⭐⭐⭐</div>
+      <div class="levelup-label">Level Up!</div>
+      <div class="levelup-num" id="levelupNum">Level 2</div>
+      <div class="levelup-title" id="levelupTitle">Journeyman</div>
+    </div>
+  </div>
+
+  <!-- ═══════════ TOAST + CONFETTI ═══════════ -->
+  <div class="toast-container" id="toastContainer" role="status" aria-live="polite"></div>
+  <canvas id="confettiCanvas" aria-hidden="true"></canvas>
+
+  <!-- ═══════════ SCRIPTS ═══════════ -->
+  <script src="js/config.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/background.js"></script>
+  <script src="js/badges.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/progress.js"></script>
+  <script src="js/widgets.js"></script>
+  <script src="js/music.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/statmodal.js"></script>
+  <script src="js/share.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

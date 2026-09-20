@@ -1,0 +1,83 @@
+/* ═══════════════════════════════════════════════════════════
+   ANIMATIONS v2 — Keyframes, Stars, Aurora, XP, Confetti
+   ═══════════════════════════════════════════════════════════ */
+
+@keyframes fadeIn        { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeOut       { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(20px); } }
+@keyframes fadeSlideIn   { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideUp       { from { opacity: 0; transform: translateY(28px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes slideInRight  { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes popIn         { from { opacity: 0; transform: scale(.7); } to { opacity: 1; transform: scale(1); } }
+@keyframes pulse         { 0%, 100% { opacity: 1; } 50% { opacity: .55; } }
+
+@keyframes auroraFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(30px, -20px) scale(1.05); }
+  66%       { transform: translate(-20px, 15px) scale(.95); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: var(--base-opacity, .7); transform: scale(1); }
+  50%       { opacity: 1; transform: scale(1.4); }
+}
+
+@keyframes shootingStar {
+  0%   { transform: translateX(0) translateY(0); opacity: 1; }
+  100% { transform: translateX(300px) translateY(120px); opacity: 0; }
+}
+
+@keyframes xpGain {
+  0%   { transform: translateY(0);   opacity: 1; }
+  80%  { transform: translateY(-28px); opacity: 1; }
+  100% { transform: translateY(-40px); opacity: 0; }
+}
+
+@keyframes levelUpBounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-16px); }
+  60% { transform: translateY(-8px); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+
+/* ── XP float label ── */
+.xp-float {
+  position: fixed;
+  pointer-events: none;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--accent-xp);
+  text-shadow: 0 2px 6px rgba(0,0,0,.4);
+  animation: xpGain 1.2s var(--ease-out) forwards;
+  z-index: 9999;
+}
+
+/* ── Level-up card bounce ── */
+.levelup-card.bounce { animation: levelUpBounce 600ms ease; }
+
+/* ── Skeleton loader ── */
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-raised) 25%, var(--border) 50%, var(--bg-raised) 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Progress bar init ── */
+@keyframes progressGrow {
+  from { width: 0%; }
+}
+.progress-bar__fill.animate-in {
+  animation: progressGrow 750ms var(--ease-out) forwards;
+}
+
+/* ── Badge stagger ── */
+.badge-card { animation-delay: calc(var(--badge-index, 0) * 55ms); }
+
+@keyframes musicPulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.08); }
+}
